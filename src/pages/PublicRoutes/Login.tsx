@@ -1,7 +1,7 @@
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { Mail, Phone, Lock, Eye, ArrowLeft, EyeClosed } from "lucide-react";
-import { Input } from "../components/Ui/input";
-import { Button } from "../components/Ui/Button";
+import { Mail, Phone, Lock, Eye, ChevronLeft, EyeClosed } from "lucide-react";
+import { Input } from "../../components/Ui/input";
+import { Button } from "../../components/Ui/Button";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 const Login = () => {
@@ -17,9 +17,9 @@ const Login = () => {
           to="/"
           className="mb-6 flex items-center justify-center w-10 h-10 rounded-full bg-[#1e1e2d]"
         >
-          <ArrowLeft className="w-6 h-6 text-gray-400" />
+          <ChevronLeft className="w-6 h-6 text-gray-400" />
         </Link>
-
+        
         <h1 className="text-2xl font-semibold text-white mb-8">Sign In</h1>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">

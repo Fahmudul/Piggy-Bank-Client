@@ -4,7 +4,7 @@ import {
   Phone,
   Lock,
   Eye,
-  ArrowLeft,
+  ChevronLeft,
   EyeClosed,
   CreditCard,
 } from "lucide-react";
@@ -40,7 +40,7 @@ const Register = () => {
     <div className="h-[650px] w-[315px] bg-[#161622] p-4 overflow-y-auto">
       <div className="w-full">
         <button className="mb-4 flex items-center justify-center w-8 h-8 rounded-full bg-[#1e1e2d]">
-          <ArrowLeft className="w-5 h-5 text-gray-400" />
+          <ChevronLeft className="w-5 h-5 text-gray-400" />
         </button>
 
         <h1 className="text-xl font-semibold text-white mb-4">Sign Up</h1>

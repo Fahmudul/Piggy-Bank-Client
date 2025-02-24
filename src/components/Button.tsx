@@ -8,10 +8,7 @@ const Button = ({
   text: string;
 }) => {
   return (
-    <button
-      type={type}
-      className={`${className} bg-[#0066FF] h-14 py-4 px-6 rounded-lg`}
-    >
+    <button type={type} className={`${className} bg-[#0066FF] px-6 rounded-lg`}>
       {text}
     </button>
   );

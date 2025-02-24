@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Logo from "../components/Ui/Logo";
+import Logo from "../../components/Ui/Logo";
 
 const Home = () => {
   return (

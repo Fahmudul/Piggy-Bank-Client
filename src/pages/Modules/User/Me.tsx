@@ -1,19 +1,9 @@
 import VisaCard from "@/components/VisaCard";
-import {
-  Search,
-  ArrowUp,
-  ArrowDown,
-  DollarSign,
-  Cloud,
-  Home,
-  CreditCard,
-  BarChart2,
-  Settings,
-} from "lucide-react";
+import { ArrowDown, ArrowUp, Cloud, DollarSign, Search } from "lucide-react";
 
-const Dashboard = () => {
+const Me = () => {
   return (
-    <div className="h-[650px] w-[315px] bg-[#161622] text-white relative overflow-hidden">
+    <div className="border h-[650px] w-full bg-[#161622] text-white relative overflow-hidden">
       {/* Header */}
       <div className="p-4 flex justify-between items-center">
         <div className="flex items-center gap-3">
@@ -23,11 +13,13 @@ const Dashboard = () => {
             <div className="font-semibold">Tanya Myroniuk</div>
           </div>
         </div>
-        <Search className="w-5 h-5 text-gray-400" />
+        <span className="bg-[#1e1e2d] w-8 h-8 rounded-full flex items-center justify-center">
+          <Search className="w-4 h-4 text-gray-400" />
+        </span>
       </div>
 
       {/* Card Section */}
-      <div className="ml-2  w-full flex justify-center items-center">
+      <div className="ml-2 mr-2 flex justify-center items-center">
         <VisaCard />
       </div>
 
@@ -132,30 +124,8 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-
-      {/* Bottom Navigation */}
-      <div className="absolute bottom-0 left-0 right-0 bg-[#1E1E2D] py-2 px-4">
-        <div className="flex justify-between items-center">
-          <div className="flex flex-col items-center gap-1">
-            <Home className="w-5 h-5 text-blue-500" />
-            <div className="text-[10px] text-blue-500">Home</div>
-          </div>
-          <div className="flex flex-col items-center gap-1">
-            <CreditCard className="w-5 h-5 text-gray-400" />
-            <div className="text-[10px] text-gray-400">My Cards</div>
-          </div>
-          <div className="flex flex-col items-center gap-1">
-            <BarChart2 className="w-5 h-5 text-gray-400" />
-            <div className="text-[10px] text-gray-400">Statistics</div>
-          </div>
-          <div className="flex flex-col items-center gap-1">
-            <Settings className="w-5 h-5 text-gray-400" />
-            <div className="text-[10px] text-gray-400">Settings</div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
 
-export default Dashboard;
+export default Me;
