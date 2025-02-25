@@ -8,7 +8,7 @@ import {
   EyeClosed,
   CreditCard,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Input } from "@/components/Ui/input";
 import { Button } from "@/components/Ui/Button";
 import { useState } from "react";
@@ -27,13 +27,34 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/Ui/form";
+import { toast } from "sonner";
+import { useRegisterMutation } from "@/Redux/Features/authApi";
 
 const Register = () => {
   const form = useForm();
   const [showPassword, setShowPassword] = useState(false);
-
+  const [register] = useRegisterMutation(undefined);
+  const navigate = useNavigate();
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
+    const modifiedData = { ...data, role: data.role ? data.role : "user" };
+    // console.log(modifiedData);
+    const toastId = toast.loading("Registering...");
+    try {
+      const response = await register(modifiedData);
+      console.log(response);
+      if (response?.data?.success) {
+        toast.success(response?.data?.message, { id: toastId });
+        // console.log(decodedData);
+        navigate("/login");
+      } else {
+        if (response.error) {
+          toast.error(response?.error?.data?.message, { id: toastId });
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    form.reset();
   };
 
   return (
@@ -49,7 +70,7 @@ const Register = () => {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
-              name="fullName"
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-xs text-gray-400">
@@ -61,6 +82,7 @@ const Register = () => {
                         {...field}
                         className="bg-gray-900 border-gray-800 text-white pl-8 h-9 text-sm"
                         placeholder="Enter your full name"
+                        value={field.value || ""}
                       />
                     </FormControl>
                     <Mail className="w-4 h-4 text-gray-400 absolute left-2 top-1/2 -translate-y-1/2" />
@@ -72,7 +94,7 @@ const Register = () => {
 
             <FormField
               control={form.control}
-              name="mobileNumber"
+              name="phone"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-xs text-gray-400">
@@ -85,6 +107,7 @@ const Register = () => {
                         className="bg-gray-900 border-gray-800 text-white pl-8 h-9 text-sm"
                         type="tel"
                         placeholder="Enter mobile number"
+                        value={field.value || ""}
                       />
                     </FormControl>
                     <Phone className="w-4 h-4 text-gray-400 absolute left-2 top-1/2 -translate-y-1/2" />
@@ -96,7 +119,7 @@ const Register = () => {
 
             <FormField
               control={form.control}
-              name="nidNumber"
+              name="NID"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-xs text-gray-400">
@@ -108,6 +131,7 @@ const Register = () => {
                         {...field}
                         className="bg-gray-900 border-gray-800 text-white pl-8 h-9 text-sm"
                         placeholder="Enter NID number"
+                        value={field.value || ""}
                       />
                     </FormControl>
                     <CreditCard className="w-4 h-4 text-gray-400 absolute left-2 top-1/2 -translate-y-1/2" />
@@ -132,6 +156,7 @@ const Register = () => {
                         className="bg-gray-900 border-gray-800 text-white pl-8 h-9 text-sm"
                         type="email"
                         placeholder="Enter email address"
+                        value={field.value || ""}
                       />
                     </FormControl>
                     <Mail className="w-4 h-4 text-gray-400 absolute left-2 top-1/2 -translate-y-1/2" />
@@ -143,13 +168,17 @@ const Register = () => {
 
             <FormField
               control={form.control}
-              name="accountType"
+              name="role"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-xs text-gray-400">
                     Account Type
                   </FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue="user">
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue="user"
+                    value={field.value || "user"}
+                  >
                     <SelectTrigger className="bg-gray-900 border-gray-800 text-white h-9 text-sm">
                       <SelectValue placeholder="Select account type" />
                     </SelectTrigger>
@@ -165,11 +194,11 @@ const Register = () => {
 
             <FormField
               control={form.control}
-              name="password"
+              name="pin"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-xs text-gray-400">
-                    Password
+                    Enter 5 digit pin
                   </FormLabel>
                   <div className="relative">
                     <FormControl>
@@ -178,6 +207,7 @@ const Register = () => {
                         className="bg-gray-900 border-gray-800 text-white pl-8 pr-8 h-9 text-sm"
                         type={showPassword ? "text" : "password"}
                         placeholder="Enter password"
+                        value={field.value || ""}
                       />
                     </FormControl>
                     <Lock className="w-4 h-4 text-gray-400 absolute left-2 top-1/2 -translate-y-1/2" />

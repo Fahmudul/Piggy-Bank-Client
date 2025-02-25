@@ -7,7 +7,8 @@ export interface IUserState {
   id?: string;
   phone?: string;
   iat?: string;
-  token?:string;
+  token?: string;
+  role?: string;
 }
 
 const initialState: IUserState = {};

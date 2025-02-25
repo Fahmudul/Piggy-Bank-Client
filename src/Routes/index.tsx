@@ -15,6 +15,10 @@ import UserManagement from "@/pages/Modules/Admin/UserManagement/UserManagement"
 import CashOut from "@/pages/Modules/CashOut/CashOut";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PubilcRoute";
+import CashManagement from "@/pages/Modules/Agent/CashManagement/CashManagement";
+import AgentCashManagement from "@/pages/Modules/Admin/AgentCashManagement/AgentCashManagement";
+import AdminRoute from "./AdminRoute";
+import AgentRoute from "./AgentRoute";
 
 const router = createBrowserRouter([
   {
@@ -107,10 +111,32 @@ const router = createBrowserRouter([
             ),
           },
           {
+            path: "cash-management",
+            element: (
+              <PrivateRoute>
+                <AgentRoute>
+                  <CashManagement />
+                </AgentRoute>
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "agent-cash-management",
+            element: (
+              <PrivateRoute>
+                <AdminRoute>
+                  <AgentCashManagement />
+                </AdminRoute>
+              </PrivateRoute>
+            ),
+          },
+          {
             path: "user-management",
             element: (
               <PrivateRoute>
-                <UserManagement />
+                <AdminRoute>
+                  <UserManagement />
+                </AdminRoute>
               </PrivateRoute>
             ),
           },

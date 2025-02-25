@@ -48,6 +48,46 @@ export type Payment = {
   email: string;
 };
 
+export const cashManagementColumn: ColumnDef<Payment>[] = [
+  {
+    accessorKey: "mobilePhone",
+    header: "Mobile No",
+  },
+
+  {
+    accessorKey: "transactionAmount",
+    header: "Amount",
+  },
+  {
+    accessorKey: "action",
+    header: "Action",
+    cell: ({ row }) => (
+      <div className="capitalize flex items-center gap-2">
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <button>
+                <ShieldCheck className="w-4 h-4 text-[#1db954] cursor-pointer" />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>Accept</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              {" "}
+              <button>
+                <ShieldBan className="w-4 h-4 text-[#e53e3e] cursor-pointer" />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>Reject</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </div>
+    ),
+  },
+];
 export const userManagementColumn: ColumnDef<Payment>[] = [
   {
     accessorKey: "mobilePhone",
@@ -199,5 +239,4 @@ export const users = [
   { mobilePhone: "+8801790123456", role: "Manager" },
   { mobilePhone: "+8801701234567", role: "Support" },
 ];
-
 export default users;
