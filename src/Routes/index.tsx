@@ -8,6 +8,11 @@ import Me from "@/pages/Modules/User/Me";
 import Statistics from "@/pages/Modules/Statistics";
 import Transactions from "@/pages/Modules/Transactions";
 import Settings from "@/pages/Modules/Settings";
+import TransactionHistory from "@/pages/Modules/Transactions/TransactionHistory";
+import SendMoney from "@/pages/Modules/SendMoney/SendMoney";
+import ReceiveMoney from "@/pages/Modules/ReceiveMoney/ReceiveMoney";
+import UserManagement from "@/pages/Modules/Admin/UserManagement/UserManagement";
+import CashOut from "@/pages/Modules/CashOut/CashOut";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +47,26 @@ const router = createBrowserRouter([
           {
             path: "transactions",
             element: <Transactions />,
+          },
+          {
+            path: "transactions/history",
+            element: <TransactionHistory />,
+          },
+          {
+            path: "send-money",
+            element: <SendMoney />,
+          },
+          {
+            path: "cash-in",
+            element: <ReceiveMoney />,
+          },
+          {
+            path: "cash-out",
+            element: <CashOut />,
+          },
+          {
+            path: "user-management",
+            element: <UserManagement />,
           },
           {
             path: "settings",

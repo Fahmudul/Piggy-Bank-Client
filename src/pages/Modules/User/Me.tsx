@@ -1,9 +1,10 @@
 import VisaCard from "@/components/VisaCard";
-import { ArrowDown, ArrowUp, Cloud, DollarSign, Search } from "lucide-react";
+import { ArrowDown, ArrowUp, Cloud, Coins, Search } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Me = () => {
   return (
-    <div className="border h-[650px] w-full bg-[#161622] text-white relative overflow-hidden">
+    <div className=" h-[650px] w-full bg-[#161622] text-white relative overflow-hidden">
       {/* Header */}
       <div className="p-4 flex justify-between items-center">
         <div className="flex items-center gap-3">
@@ -25,30 +26,30 @@ const Me = () => {
 
       {/* Quick Actions */}
       <div className="px-8 py-4 flex justify-between">
-        <div className="flex flex-col items-center gap-1">
+        <Link to="/me/send-money" className="flex flex-col items-center gap-1">
           <div className="w-10 h-10 bg-[#1E1E2D] rounded-full flex items-center justify-center">
             <ArrowUp className="w-5 h-5" />
           </div>
           <div className="text-xs">Sent</div>
-        </div>
-        <div className="flex flex-col items-center gap-1">
+        </Link>
+        <Link to="/me/cash-in" className="flex flex-col items-center gap-1">
           <div className="w-10 h-10 bg-[#1E1E2D] rounded-full flex items-center justify-center">
             <ArrowDown className="w-5 h-5" />
           </div>
           <div className="text-xs">Receive</div>
-        </div>
-        <div className="flex flex-col items-center gap-1">
+        </Link>
+        <Link to="/me/cash-out" className="flex flex-col items-center gap-1">
           <div className="w-10 h-10 bg-[#1E1E2D] rounded-full flex items-center justify-center">
-            <DollarSign className="w-5 h-5 text-blue-500" />
+            <Coins className="w-5 h-5 text-blue-500" />
           </div>
-          <div className="text-xs text-blue-500">Loan</div>
-        </div>
-        <div className="flex flex-col items-center gap-1">
+          <div className="text-xs text-blue-500">Cash Out</div>
+        </Link>
+        <Link to="/me/topup" className="flex flex-col items-center gap-1">
           <div className="w-10 h-10 bg-[#1E1E2D] rounded-full flex items-center justify-center">
             <Cloud className="w-5 h-5" />
           </div>
           <div className="text-xs">Topup</div>
-        </div>
+        </Link>
       </div>
 
       {/* Transactions */}
