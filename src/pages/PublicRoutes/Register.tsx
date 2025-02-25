@@ -28,7 +28,7 @@ import {
   FormMessage,
 } from "@/components/Ui/form";
 import { toast } from "sonner";
-import { useRegisterMutation } from "@/Redux/Features/authApi";
+import { useRegisterMutation } from "@/Redux/Features/Auth/authApi";
 
 const Register = () => {
   const form = useForm();

@@ -1,5 +1,5 @@
-import { useLogoutMutation } from "@/Redux/Features/authApi";
-import { logout } from "@/Redux/Features/authSlice";
+import { useLogoutMutation } from "@/Redux/Features/Auth/authApi";
+import { logout } from "@/Redux/Features/Auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/Redux/hook";
 import { ChevronLeft } from "lucide-react";
 import { ElementType } from "react";

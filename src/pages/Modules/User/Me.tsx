@@ -30,7 +30,9 @@ const Me = () => {
           <div className="w-10 h-10 bg-[#1E1E2D] rounded-full flex items-center justify-center">
             <ArrowUp className="w-5 h-5" />
           </div>
-          <div className="text-xs">Sent</div>
+          <div className="text-xs text-center">
+            Sent
+          </div>
         </Link>
         <Link to="/me/cash-in" className="flex flex-col items-center gap-1">
           <div className="w-10 h-10 bg-[#1E1E2D] rounded-full flex items-center justify-center">

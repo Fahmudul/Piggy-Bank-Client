@@ -1,12 +1,11 @@
-import { baseApi } from "../baseApi/baseApi";
-
-const authApis = baseApi.injectEndpoints({
+import { baseApi } from "../../baseApi/baseApi";
+const transactionApis = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    login: builder.mutation({
-      query: (credentials) => ({
-        url: "/auth/login",
+    sendMoney: builder.mutation({
+      query: (payload) => ({
+        url: "/transaction/send-money",
         method: "POST",
-        body: credentials,
+        body: payload,
       }),
     }),
     logout: builder.mutation({
@@ -26,5 +25,4 @@ const authApis = baseApi.injectEndpoints({
   }),
 });
 
-export const { useLoginMutation, useLogoutMutation, useRegisterMutation } =
-  authApis;
+export const { useSendMoneyMutation } = transactionApis;

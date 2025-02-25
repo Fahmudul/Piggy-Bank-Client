@@ -13,10 +13,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/Ui/form";
-import { useLoginMutation } from "@/Redux/Features/authApi";
+import { useLoginMutation } from "@/Redux/Features/Auth/authApi";
 import { toast } from "sonner";
 import { useAppDispatch } from "@/Redux/hook";
-import { IUserState, setUser } from "@/Redux/Features/authSlice";
+import { IUserState, setUser } from "@/Redux/Features/Auth/authSlice";
 
 const Login = () => {
   const form = useForm();
