@@ -13,6 +13,8 @@ import SendMoney from "@/pages/Modules/SendMoney/SendMoney";
 import ReceiveMoney from "@/pages/Modules/ReceiveMoney/ReceiveMoney";
 import UserManagement from "@/pages/Modules/Admin/UserManagement/UserManagement";
 import CashOut from "@/pages/Modules/CashOut/CashOut";
+import PrivateRoute from "./PrivateRoute";
+import PublicRoute from "./PubilcRoute";
 
 const router = createBrowserRouter([
   {
@@ -26,51 +28,99 @@ const router = createBrowserRouter([
       },
       {
         path: "login",
-        element: <Login />,
+        element: (
+          <PublicRoute>
+            <Login />
+          </PublicRoute>
+        ),
       },
       {
         path: "register",
-        element: <Register />,
+        element: (
+          <PublicRoute>
+            <Register />
+          </PublicRoute>
+        ),
       },
       {
         path: "me",
-        element: <Dashboard />,
+        element: (
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        ),
         children: [
           {
             index: true,
-            element: <Me />,
+            element: (
+              <PrivateRoute>
+                <Me />
+              </PrivateRoute>
+            ),
           },
           {
             path: "statistics",
-            element: <Statistics />,
+            element: (
+              <PrivateRoute>
+                <Statistics />
+              </PrivateRoute>
+            ),
           },
           {
             path: "transactions",
-            element: <Transactions />,
+            element: (
+              <PrivateRoute>
+                <Transactions />
+              </PrivateRoute>
+            ),
           },
           {
             path: "transactions/history",
-            element: <TransactionHistory />,
+            element: (
+              <PrivateRoute>
+                <TransactionHistory />
+              </PrivateRoute>
+            ),
           },
           {
             path: "send-money",
-            element: <SendMoney />,
+            element: (
+              <PrivateRoute>
+                <SendMoney />
+              </PrivateRoute>
+            ),
           },
           {
             path: "cash-in",
-            element: <ReceiveMoney />,
+            element: (
+              <PrivateRoute>
+                <ReceiveMoney />
+              </PrivateRoute>
+            ),
           },
           {
             path: "cash-out",
-            element: <CashOut />,
+            element: (
+              <PrivateRoute>
+                <CashOut />
+              </PrivateRoute>
+            ),
           },
           {
             path: "user-management",
-            element: <UserManagement />,
+            element: (
+              <PrivateRoute>
+                <UserManagement />
+              </PrivateRoute>
+            ),
           },
           {
             path: "settings",
-            element: <Settings />,
+            element: (
+              <PrivateRoute>
+                <Settings />
+              </PrivateRoute>
+            ),
           },
         ],
       },

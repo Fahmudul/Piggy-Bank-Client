@@ -1,91 +1,175 @@
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { Mail, Phone, Lock, Eye, ChevronLeft, EyeClosed } from "lucide-react";
-import { Input } from "../../components/Ui/input";
-import { Button } from "../../components/Ui/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Input } from "@/components/Ui/input";
+import { Button } from "@/components/Ui/Button";
 import { useState } from "react";
+import { jwtDecode } from "jwt-decode";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/Ui/form";
+import { useLoginMutation } from "@/Redux/Features/authApi";
+import { toast } from "sonner";
+import { useAppDispatch } from "@/Redux/hook";
+import { IUserState, setUser } from "@/Redux/Features/authSlice";
+
 const Login = () => {
-  const { register, handleSubmit } = useForm();
+  const form = useForm();
+  const [login] = useLoginMutation(undefined);
+  const dispatch = useAppDispatch();
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
+    // console.log(data);
+    const toastId = toast.loading("Logging in...");
+    const modifiedData: { email?: string; pin: string; phone?: string } = {
+      pin: "",
+    };
+    modifiedData.pin = data.pin;
+    if (data.mobileNumber) {
+      modifiedData.phone = data.mobileNumber;
+    } else {
+      modifiedData.email = data.email;
+    }
+    try {
+      const response = await login(modifiedData);
+      console.log(response);
+      if (response?.data?.success) {
+        toast.success("Login successful", { id: toastId });
+        const decodedData = jwtDecode(response.data.data) as IUserState;
+        // console.log(decodedData);
+        dispatch(setUser({ ...decodedData, token: response.data.data }));
+        navigate("/me");
+      } else {
+        if (response.error) {
+          toast.error(response?.error?.data?.message, { id: toastId });
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   return (
-    <div className="min-h-screen bg-[#161622] p-4">
-      <div className="max-w-md mx-auto">
+    <div className="h-[650px] w-[315px] bg-[#161622] p-4 overflow-y-auto">
+      <div className="w-full">
         <Link
           to="/"
-          className="mb-6 flex items-center justify-center w-10 h-10 rounded-full bg-[#1e1e2d]"
+          className="mb-4 flex items-center justify-center w-8 h-8 rounded-full bg-[#1e1e2d]"
         >
-          <ChevronLeft className="w-6 h-6 text-gray-400" />
+          <ChevronLeft className="w-5 h-5 text-gray-400" />
         </Link>
-        
-        <h1 className="text-2xl font-semibold text-white mb-8">Sign In</h1>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          <div>
-            <label className="text-sm text-gray-400 block mb-2">
-              Phone Number
-            </label>
-            <div className="relative">
-              <Input
-                {...register("phone", { required: true })}
-                className="bg-gray-900 border-gray-800 text-white pl-10"
-                placeholder="Enter phone number"
-                type="tel"
-              />
-              <Phone className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
-            </div>
-          </div>
+        <h1 className="text-xl font-semibold text-white mb-4">Sign Up</h1>
 
-          <div>
-            <label className="text-sm text-gray-400 block mb-2">
-              Email Address
-            </label>
-            <div className="relative">
-              <Input
-                {...register("email", {
-                  required: true,
-                  pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                })}
-                className="bg-gray-900 border-gray-800 text-white pl-10"
-                type="email"
-                placeholder="Enter email address"
-              />
-              <Mail className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
-            </div>
-          </div>
-
-          <div className="relative">
-            <Input
-              {...register("password", { required: true, minLength: 6 })}
-              className="bg-gray-900 border-gray-800 text-white pl-10 pr-10"
-              type={showPassword ? "text" : "password"}
-              placeholder="Enter password"
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="mobileNumber"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-xs text-gray-400">
+                    Mobile Number
+                  </FormLabel>
+                  <div className="relative">
+                    <FormControl>
+                      <Input
+                        {...field}
+                        className="bg-gray-900 border-gray-800 text-white pl-8 h-9 text-sm"
+                        type="tel"
+                        placeholder="Enter mobile number"
+                        value={field.value || ""}
+                      />
+                    </FormControl>
+                    <Phone className="w-4 h-4 text-gray-400 absolute left-2 top-1/2 -translate-y-1/2" />
+                  </div>
+                  <FormMessage className="text-xs text-red-500" />
+                </FormItem>
+              )}
             />
-            <Lock className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
-            {showPassword ? (
-              <Eye
-                className="w-5 h-5 text-gray-400 absolute right-3 top-1/2 -translate-y-1/2"
-                onClick={() => setShowPassword(!showPassword)}
-              />
-            ) : (
-              <EyeClosed
-                className="w-5 h-5 text-gray-400 absolute right-3 top-1/2 -translate-y-1/2"
-                onClick={() => setShowPassword(!showPassword)}
-              />
-            )}
-          </div>
 
-          <Button
-            type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg"
-          >
-            Sign Up
-          </Button>
-        </form>
+            <div className="separator">
+              <span className="line"></span>
+              <span className="or-text">Or</span>
+              <span className="line"></span>
+            </div>
 
-        <p className="text-gray-400 text-center mt-6">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-xs text-gray-400">
+                    Email Address
+                  </FormLabel>
+                  <div className="relative">
+                    <FormControl>
+                      <Input
+                        {...field}
+                        className="bg-gray-900 border-gray-800 text-white pl-8 h-9 text-sm"
+                        type="email"
+                        placeholder="Enter email address"
+                        value={field.value || ""}
+                      />
+                    </FormControl>
+                    <Mail className="w-4 h-4 text-gray-400 absolute left-2 top-1/2 -translate-y-1/2" />
+                  </div>
+                  <FormMessage className="text-xs text-red-500" />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="pin"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-xs text-gray-400">
+                    Password
+                  </FormLabel>
+                  <div className="relative">
+                    <FormControl>
+                      <Input
+                        {...field}
+                        className="bg-gray-900 border-gray-800 text-white pl-8 pr-8 h-9 text-sm"
+                        type={showPassword ? "text" : "password"}
+                        placeholder="Enter 5 digit pin"
+                        value={field.value || ""}
+                      />
+                    </FormControl>
+                    <Lock className="w-4 h-4 text-gray-400 absolute left-2 top-1/2 -translate-y-1/2" />
+                    <div
+                      className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? (
+                        <Eye className="w-4 h-4 text-gray-400" />
+                      ) : (
+                        <EyeClosed className="w-4 h-4 text-gray-400" />
+                      )}
+                    </div>
+                  </div>
+                  <FormMessage className="text-xs text-red-500" />
+                </FormItem>
+              )}
+            />
+
+            <Button
+              type="submit"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-1 h-9 rounded-lg text-sm"
+            >
+              Sign In
+            </Button>
+          </form>
+        </Form>
+
+        <p className="text-gray-400 text-center text-xs mt-4">
           Dont have an account?{" "}
           <Link to="/register" className="text-blue-500">
             Sign Up

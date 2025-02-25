@@ -1,9 +1,10 @@
-import React from "react";
+import Header from "@/components/Header";
+import LogOutSvg from "@/components/Ui/LogOutSvg";
 
 const Settings = () => {
   return (
-    <div>
-      <h1>This is settings</h1>
+    <div className="p-4">
+      <Header title="Settings" Icon={LogOutSvg} logOutBtn={true} />
     </div>
   );
 };
