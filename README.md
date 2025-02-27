@@ -99,8 +99,8 @@ npm start
 This project successfully implements a **secure and user-friendly MFS application**, providing essential features like authentication, transactions, and role-based access. The system ensures **security, efficiency, and scalability**, making it suitable for real-world financial operations.
 
 ### **Author**
-[Your Name]
-
+[Fahmudul Hassan]
+## Admin Credential
+email:admin@gmail.com
+pin:12345
 ---
-**Note:** This is a skill assessment project demonstrating technical abilities in **full-stack web development**.
-
